@@ -16,3 +16,8 @@ $ git clone https://github.com/JoseMontesRicardo/nodejs-min-framework.git
 ```
 $ npm install
 ```
+
+3. Up
+```
+$ npm run demon
+```
