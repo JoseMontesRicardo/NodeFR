@@ -1,0 +1,28 @@
+{
+    "data-base": {
+        "production": {
+            "data-base": "",
+            "user": "",
+            "pass": "",
+            "host": "",
+            "dialect": "mysql",
+            "timezone": "America/Bogota"
+        },
+        "test": {
+            "data-base": "schema1",
+            "user": "root",
+            "pass": "123456",
+            "host": "localhost",
+            "dialect": "mysql",
+            "timezone": "America/Bogota"
+        }
+    },
+    "ports": {
+        "production": {
+            "app": 3000
+        },
+        "test": {
+            "app": 4000
+        }
+    }
+}
