@@ -1,5 +1,5 @@
 # nodejs-min-framework
-mini framework para [NodeJS](https://github.com/nodejs/node)
+mini framework para [NodeJS](https://github.com/nodejs/node) ES6
 
 ## Requerimientos
 - NodeJS  >=  6.9.1.
