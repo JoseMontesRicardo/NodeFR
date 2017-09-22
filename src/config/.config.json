@@ -5,16 +5,16 @@
             "user": "",
             "pass": "",
             "host": "",
-            "dialect": "db dialect",
-            "timezone": "your timezone"
+            "dialect": "mysql",
+            "timezone": "America/Bogota"
         },
         "test": {
-            "data-base": "your db name",
-            "user": "your user",
-            "pass": "your pass",
-            "host": "your host",
-            "dialect": "db dialect",
-            "timezone": "your timezoney"
+            "data-base": "schema1",
+            "user": "root",
+            "pass": "123456",
+            "host": "localhost",
+            "dialect": "mysql",
+            "timezone": "America/Bogota"
         }
     },
     "ports": {
