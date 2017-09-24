@@ -8,8 +8,10 @@ mini framework para [NodeJS](https://github.com/nodejs/node) que usa las caracte
 
 ## Instalación
 
+
+1. Instalar nodefr
 ```
-$ npm i -g nodefr
+$ npm install -g nodefr
 ```
 
 2. Instalar dependencias
