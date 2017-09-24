@@ -8,12 +8,15 @@ var fs = require('fs');
 var path = require('path');
 var srcPath = process.cwd() + '/src';
 var Lodash = require('lodash');
+var exec = require('exec');
+var download = require('download-git-repo');
 var routersPath = srcPath + '/routes';
 var modelPath = srcPath + '/models';
 var coreTemplates = require('./.cli-templates/CoreTemplates');
 
 let options = cli.parse({
-    generate: ['g', 'create new File with specification', 'string', false]
+    generate: ['g', 'create new File with specification', 'string', false],
+    new: ['n', 'create new project']
 });
 
 
@@ -27,6 +30,12 @@ if (options.generate) {
             chalk.red(new Error('Undefined layout!'))
         );
     }
+}
+
+
+if (options.new) {
+
+    cloneProject();
 }
 
 // console.log(
@@ -107,4 +116,30 @@ function generateModel() {
             }
         }
     }
+}
+
+function cloneProject() {
+    console.log(
+        chalk.red(
+            figlet.textSync('NodeFR', { horizontalLayout: 'fitted' })
+        )
+    );
+
+    cli.spinner('Creating..');
+
+    if (cli.argc === 1) {
+        download('JoseMontesRicardo/nodejs-min-framework', process.cwd() + '/' + cli.args[0], (err) => {
+            if (err) {
+                return console.log(
+                    chalk.red(new Error(err))
+                );
+            }
+
+            cli.spinner('Creating.. done!', true)
+            return console.log(
+                chalk.green('[OK] project created!')
+            );
+        })
+    }
+
 }

@@ -1,5 +1,5 @@
-# nodejs-min-framework
-mini framework para [NodeJS](https://github.com/nodejs/node) con implementacion de ES6
+# NodeFR
+mini framework para [NodeJS](https://github.com/nodejs/node) que usa las caracteristicas de ES6
 
 ## Requerimientos
 - NodeJS  >=  6.9.1.
@@ -7,9 +7,9 @@ mini framework para [NodeJS](https://github.com/nodejs/node) con implementacion 
 
 
 ## Instalación
-1. Clonar el repositorio
+
 ```
-$ git clone https://github.com/JoseMontesRicardo/nodejs-min-framework.git
+$ npm i -g nodefr
 ```
 
 2. Instalar dependencias
@@ -22,7 +22,7 @@ $ npm install
 $ npm run demon
 ```
 
-## CLI
+## CLI Interface
 * para generar rutas.
 ```
 $ nodefr --generate route [name]
