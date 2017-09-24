@@ -8,28 +8,35 @@ mini framework para [NodeJS](https://github.com/nodejs/node) que usa las caracte
 
 ## Instalación
 
-
 1. Instalar nodefr
 ```
 $ npm install -g nodefr
 ```
+2. Crear Proyecto
+```
+$ nodefr --new my-app
 
-2. Instalar dependencias
+$ cd my-app
+```
+3. Instalar dependencias
 ```
 $ npm install
 ```
-
-3. Up
+4. Up
 ```
+//visit -> http://localhost:4000/testroute
 $ npm run demon
 ```
 
 ## CLI Interface
+* para crear un projecto nuevo
+```
+$ nodefr --new [name]
+```
 * para generar rutas.
 ```
 $ nodefr --generate route [name]
 ```
-
 * para generar modelos.
 ```
 $ nodefr --generate model [name]
