@@ -1,14 +1,15 @@
 
+import BaseModel from '../../base/BaseModel';
 import Lodash from 'lodash';
+import Sequelize from 'sequelize';
 
-
-class TestModel {
+class TestModel extends BaseModel {
 
     /**
-     * TestModel constructor
+     * construct for TestModel
      */
-    constructor(){
-        this.schema = this.getSchema();
+    constructor( sync = true ) {
+        super(sync);
     }
 
     /**
@@ -22,9 +23,18 @@ class TestModel {
      * defineSchema
      */
     getSchema() {
-        return sequelize.define(this.schemaName, {});
+        return sequelize.define(this.schemaName, {
+            //this is a field from TestModel table
+            TestModelField: {
+                //type String
+                type: Sequelize.STRING,
+                defaultValue: 'TestModelField!'
+            }
+            
+        });
     }
 
 }
 
 export default TestModel;
+    

@@ -27,7 +27,7 @@ class Connection {
 
                 return resolve(sequelize);
             } catch (error) {
-
+                
             }
         })
     }

@@ -1,5 +1,5 @@
 {
-  "name": "sequelize-test",
+  "name": "nodejs-min-framework",
   "version": "1.0.0",
   "description": "prueba con el ORM sequelize",
   "main": "index.js",
@@ -37,6 +37,6 @@
     "nodemon": "^1.12.1"
   },
   "bin": {
-    "ginit": "./cli.js"
+    "nodefr": "./cli.js"
   }
 }
