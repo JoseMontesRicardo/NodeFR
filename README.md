@@ -1,5 +1,5 @@
 # nodejs-min-framework
-mini framework para [NodeJS](https://github.com/nodejs/node) ES6
+mini framework para [NodeJS](https://github.com/nodejs/node) con implementacion de ES6
 
 ## Requerimientos
 - NodeJS  >=  6.9.1.
@@ -20,4 +20,15 @@ $ npm install
 3. Up
 ```
 $ npm run demon
+```
+
+## CLI
+* para generar rutas.
+```
+$ nodefr --generate route [name]
+```
+
+* para generar modelos.
+```
+$ nodefr --generate model [name]
 ```
