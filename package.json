@@ -1,12 +1,13 @@
 {
   "name": "nodefr",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "mini nodejs framework (alpha)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "demon": "nodemon index.js --exec babel-node"
   },
+  "repository": "https://github.com/JoseMontesRicardo/NodeFR",
   "author": "jose",
   "license": "ISC",
   "dependencies": {
