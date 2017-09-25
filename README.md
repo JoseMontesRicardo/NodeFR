@@ -8,21 +8,21 @@ mini framework para [NodeJS](https://github.com/nodejs/node) que usa las caracte
 
 ## Instalación
 
-* ### Instalar nodefr
+* Instalar nodefr
 ```
 $ npm install -g nodefr
 ```
-* ### Crear Proyecto
+* Crear Proyecto
 ```
 $ nodefr --new my-app
 
 $ cd my-app
 ```
-* ### Instalar dependencias
+* Instalar dependencias
 ```
 $ npm install
 ```
-* ### Up
+* Up
 ```
 //visit -> http://localhost:4000/testroute
 $ npm run demon
