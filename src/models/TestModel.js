@@ -6,18 +6,14 @@ import Sequelize from 'sequelize';
 class TestModel extends BaseModel {
 
     /**
-     * construct for TestModel
+     * constructor for TestModel
+     * 
+     * @param {Boolean} sync sincronization switch
      */
     constructor( sync = true ) {
         super(sync);
     }
 
-    /**
-     * return schema name
-     */
-    get schemaName() {
-        return this.constructor.name;
-    }
 
     /**
      * defineSchema

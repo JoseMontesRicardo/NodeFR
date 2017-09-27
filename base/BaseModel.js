@@ -5,7 +5,7 @@ class BaseModel {
      * 
      * @param {Boolean} sync syncronization switch
      */
-    constructor( sync = false ) {
+    constructor(sync = false) {
         (async () => {
             await this.syncModel(sync);
         })();
@@ -15,21 +15,29 @@ class BaseModel {
     /**
      * return schema
      */
-    get schema () {
+    get schema() {
         return this.getSchema();
+    }
+
+    
+    /**
+     * return schema name
+     */
+    get schemaName() {
+        return this.constructor.name;
     }
 
 
     /**
-     * to simcronize model with table
+     * to sincronize model with table
      * 
      * @param {Boolean} sync syncronization switch
      */
     syncModel(sync) {
         return new Promise(async (resolve, reject) => {
             try {
-                if ( sync ){
-                    await this.schema.sync({force: false});
+                if (sync) {
+                    await this.schema.sync({ force: false });
                     console.log(`${this.constructor.name} sincronized!`)
                 }
                 resolve(true);

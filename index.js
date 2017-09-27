@@ -29,11 +29,12 @@ import cors from 'cors';
 
         //start Express
         let app = Express();
-        
+        let router = Express.Router();
+
         //Expressjs configurations
         // enable cors
         app.use(cors());
-        await util.startRoutes(app);
+        await util.startRoutes(app, router);
 
         //create server http
         app.server = http.createServer(app);

@@ -14,12 +14,16 @@ class TestRoute extends BaseRoute {
     }
 
     /**
-    * route main method
+    * main method, init all routes for TestRoute here!
     */
-    mainRoute() {
-        this._app.get('/' + Lodash.toLower(this.constructor.name), async (req, res) => {
-            res.send({ 'route':  'route said Hi from ' + Lodash.toLower(this.constructor.name) + '' });
-        })
+    init() {
+
+        this.get('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
+        this.post('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
+        this.put('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
+        this.patch('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
+        this.delete('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
+
     }
 
 }

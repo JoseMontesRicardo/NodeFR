@@ -134,7 +134,7 @@ class Util {
      * 
      * @param {json} app express instance
      */
-    startRoutes(app) {
+    startRoutes(app, router) {
         return new Promise(async (resolve, reject) => {
             try {
                 let files = await this.readAllRouteFiles();
@@ -142,9 +142,9 @@ class Util {
                     if (files.hasOwnProperty(key)) {
                         let route = require(files[key]).default;
                         new route(app);
-                        console.log(path.basename(files[key])+' loaded!');
                     }
                 }
+                app.use(router);
                 return resolve(true);
             } catch (error) {
                 console.log(error);

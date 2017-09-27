@@ -21,12 +21,16 @@ class ${ fileName} extends BaseRoute {
     }
 
     /**
-    * route main method
+    * main method, init all routes for ${fileName} here!
     */
-    mainRoute() {
-        this._app.get('/' + Lodash.toLower(this.constructor.name), async (req, res) => {
-            res.send({ 'route':  'route said Hi from ' + Lodash.toLower(this.constructor.name) + '' });
-        })
+    init() {
+
+        this.get('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
+        this.post('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
+        this.put('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
+        this.patch('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
+        this.delete('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
+
     }
 
 }
@@ -49,18 +53,14 @@ import Sequelize from 'sequelize';
 class ${fileName} extends BaseModel {
 
     /**
-     * construct for ${fileName}
+     * constructor for ${fileName}
+     * 
+     * @param {Boolean} sync sincronization switch
      */
     constructor( sync = true ) {
         super(sync);
     }
 
-    /**
-     * return schema name
-     */
-    get schemaName() {
-        return this.constructor.name;
-    }
 
     /**
      * defineSchema
