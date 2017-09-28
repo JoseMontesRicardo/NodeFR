@@ -1,4 +1,3 @@
-import { router } from './Decorators';
 import Lodash from 'lodash';
 
 
@@ -7,7 +6,7 @@ class BaseRoute {
     /**
      * construct of BaseRoute
      * 
-     * @param {json} app Express.js instance
+     * @param {json} router Express.js instance
      */
     constructor(router) {
         this.router = router;

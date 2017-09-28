@@ -1,5 +1,4 @@
 {
-    "enviroment":"development",
     "data-base": {
         "default":"example",
         "example": {
@@ -11,5 +10,5 @@
             "timezone": "America/Bogota"
         }
     },
-    "port":  3000
+    "port":  4000
 }

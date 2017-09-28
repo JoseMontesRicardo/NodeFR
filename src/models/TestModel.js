@@ -1,9 +1,8 @@
 
-import BaseModel from '../../base/BaseModel';
 import Lodash from 'lodash';
 import Sequelize from 'sequelize';
 
-class TestModel extends BaseModel {
+class TestModel extends bases.BaseModel {
 
     /**
      * constructor for TestModel

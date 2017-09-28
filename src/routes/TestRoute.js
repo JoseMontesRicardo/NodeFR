@@ -1,8 +1,7 @@
 
-import BaseRoute from '../../base/BaseRoute';
 import Lodash from 'lodash';
 
-class TestRoute extends BaseRoute {
+class TestRoute extends bases.BaseRoute {
         
     /**
     * construct for TestRoute
