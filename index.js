@@ -6,25 +6,24 @@ import Express from 'express';
 import Util from './Util';
 import http from 'http';
 import cors from 'cors';
- 
+
 
 (async () => {
     try {
 
         //init utils
         let util = new Util();
-        //read config file
-        let config = await Util.readConfig();
         // read enviroment
-        let enviroment = await util.getEnviroment();
+        let enviroment = await Util.readEnviroment();
 
 
         // define port from config file
-        let port = config.ports[enviroment].app;
+        let port = enviroment.port;
 
 
         //start connections and sequelize
         let connection = new Connection();
+        console.log('hola')
         global.sequelize = await connection.getConnection();
 
         //start Express

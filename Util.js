@@ -32,30 +32,14 @@ class Util {
         return `${this.rootPath()}/routes`;
     }
 
-    /**
-     * leer archivo de configuracion
-     */
-    static readEnviromentsVar() {
-        return new Promise((resolve, reject) => {
-            try {
-                fs.readFile(`${Util.configPath()}/.env.json`, (err, stream) => {
-                    if (err) return reject(err);
-                    resolve(JSON.parse(stream));
-                })
-            } catch (error) {
-                console.log(error);
-                reject(error);
-            }
-        })
-    }
 
     /**
      * leer configuracion
      */
-    static readConfig() {
+    static readEnviroment() {
         return new Promise((resolve, reject) => {
             try {
-                fs.readFile(`${Util.configPath()}/.config.json`, (err, stream) => {
+                fs.readFile(`${Util.configPath()}/.enviroment.json`, (err, stream) => {
                     if (err) return reject(err);
                     resolve(JSON.parse(stream));
                 })
@@ -66,34 +50,11 @@ class Util {
         })
     }
 
-    /**
-     * define enviroment in .config.json file
-     */
-    getEnviroment() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                let envFile = await Util.readEnviromentsVar();
-                let enviroment = "";
 
-                for (var key in envFile.enviroment) {
-                    if (envFile.enviroment.hasOwnProperty(key)) {
-                        if (envFile.enviroment[key] === true) {
-                            enviroment = key;
-                        }
-                    }
-                }
-
-                return resolve(enviroment);
-            } catch (error) {
-                console.log(error);
-                reject(error);
-            }
-        })
-    }
 
     /**
      * up and run all routes
-     * 
+     *
      * @param {json} app express instance
      */
     readAllRouteFiles() {
@@ -108,12 +69,12 @@ class Util {
                     for (var key in files) {
                         if (files.hasOwnProperty(key)) {
                             if (path.extname(files[key]) !== '.js') {
-                                let msg = `extencion incorrecta en el archivo ${files[key]}`;
+                                let msg = `Extencion incorrecta en el archivo ${files[key]}`;
                                 throw new Error(msg);
                             }
 
                             if (files[key].indexOf('Route') === -1) {
-                                let msg = `nombre del archivo ${files[key]} incorrecto`;
+                                let msg = `Nombre del archivo ${files[key]} incorrecto`;
                                 throw new Error(msg);
                             }
                             files[key] = `${Util.reoutesPath()}/${files[key]}`;
@@ -131,7 +92,7 @@ class Util {
 
     /**
      * up and run all routes
-     * 
+     *
      * @param {json} app express instance
      */
     startRoutes(app, router) {

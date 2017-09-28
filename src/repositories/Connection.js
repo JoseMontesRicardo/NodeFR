@@ -27,7 +27,8 @@ class Connection {
 
                 return resolve(sequelize);
             } catch (error) {
-                
+                console.log(error);
+                reject(error);
             }
         })
     }
@@ -39,27 +40,16 @@ class Connection {
     setUpParams() {
         return new Promise(async (resolve, reject) => {
             try {
-                let envFile = await Fixture.readEnviromentsVar();
-                let config = await Fixture.readConfig();
-                let enviroment = "";
+                let envFile = await Fixture.readEnviroment();
                 let connectionParams = null;
-
-                for (var key in envFile.enviroment) {
-                    if (envFile.enviroment.hasOwnProperty(key)) {
-                        if (envFile.enviroment[key] === true) {
-                            enviroment = key;
-                        }
-                    }
-                }
-
-                if (Lodash.has(config, 'data-base')) {
-                    if (Lodash.has(config['data-base'], enviroment)) {
-                        connectionParams = config['data-base'][enviroment];
+                if (Lodash.has(envFile, 'data-base')) {
+                    if (Lodash.has(envFile['data-base'], 'default')) {
+                        connectionParams = envFile['data-base']['default'];
                     } else {
-                        throw new Error('entorno no definido para la base de datos')
+                        throw new Error('Connection key not found.')
                     }
                 } else {
-                    throw new Error('configuracion inexistente para la base de datos')
+                    throw new Error('Data-base config not found.')
                 }
 
                 return resolve(connectionParams);

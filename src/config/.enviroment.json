@@ -1,5 +1,4 @@
 {
-    "enviroment":"development",
     "data-base": {
         "default":"example",
         "example": {
