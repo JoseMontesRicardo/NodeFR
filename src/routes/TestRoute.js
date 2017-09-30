@@ -1,15 +1,12 @@
-
-import Lodash from 'lodash';
-
 class TestRoute extends bases.BaseRoute {
         
     /**
     * construct for TestRoute
     * 
-    * @param {json} app instance of ExpressJS 
+    * @param {json} router instance of ExpressJS router 
     */
-    constructor(app) {
-        super(app);
+    constructor(router) {
+        super(router);
     }
 
     /**

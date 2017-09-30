@@ -6,15 +6,12 @@
  */
 const routeTemplate = function (fileName) {
     return `
-import BaseRoute from '../../base/BaseRoute';
-import Lodash from 'lodash';
-
-class ${ fileName} extends BaseRoute {
+class ${fileName} extends bases.BaseRoute {
         
     /**
     * construct for ${fileName}
     * 
-    * @param {json} app instance of ExpressJS 
+    * @param {json} router instance of ExpressJS router 
     */
     constructor(app) {
         super(app);
@@ -46,16 +43,14 @@ export default ${fileName};`;
  */
 const modelTemplate = function (fileName) {
     return `
-import BaseModel from '../../base/BaseModel';
-import Lodash from 'lodash';
 import Sequelize from 'sequelize';
 
-class ${fileName} extends BaseModel {
+class ${fileName} extends bases.BaseModel {
 
     /**
      * constructor for ${fileName}
      * 
-     * @param {Boolean} sync sincronization switch
+     * @param {Boolean} sync sincronization switch.
      */
     constructor( sync = true ) {
         super(sync);

@@ -9,6 +9,7 @@ class BaseModel {
         (async () => {
             await this.syncModel(sync);
         })();
+        return this.schema;
     }
 
 
@@ -19,7 +20,7 @@ class BaseModel {
         return this.getSchema();
     }
 
-    
+
     /**
      * return schema name
      */

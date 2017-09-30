@@ -1,4 +1,3 @@
-import appRootDir from 'app-root-dir';
 import PathHelper from './PathHelper';
 import Util from '../Util';
 

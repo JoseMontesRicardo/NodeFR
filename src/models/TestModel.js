@@ -1,5 +1,4 @@
 
-import Lodash from 'lodash';
 import Sequelize from 'sequelize';
 
 class TestModel extends bases.BaseModel {
