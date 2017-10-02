@@ -72,6 +72,7 @@ class BaseRoute {
    resource(source, controller) {
         let arrayRoutes = this.objRoute(source);
         arrayRoutes.forEach((objRoute) => {
+            console.log(Object.getPrototypeOf(controller) );
             if (Object.getPrototypeOf(controller).hasOwnProperty(objRoute.action)) {
                 let route = this.router.route(objRoute.route);
                     route[objRoute.verb](controller[objRoute.action]());

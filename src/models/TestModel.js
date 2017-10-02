@@ -1,7 +1,7 @@
 
 import Sequelize from 'sequelize';
 
-class TestModel extends bases.BaseModel {
+class TestModel extends Bases.BaseModel {
 
     /**
      * constructor for TestModel

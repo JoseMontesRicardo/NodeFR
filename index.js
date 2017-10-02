@@ -32,14 +32,13 @@ import cors from 'cors';
 
         app.use(BodyParser.json()); // for parsing application/json
         app.use(BodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+        //Expressjs configurations
+        // enable cors
+        app.use(cors());
 
         let router = Express.Router();
         await routerHelper.startRoutes(app, router);
 
-        //Expressjs configurations
-        // enable cors
-        app.use(cors());
-        // await util.startRoutes(app, router);
 
         //create server http
         app.server = http.createServer(app);
