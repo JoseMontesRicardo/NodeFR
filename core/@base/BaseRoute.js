@@ -1,4 +1,4 @@
-
+import Lodash from 'lodash';
 
 class BaseRoute {
 
@@ -9,6 +9,7 @@ class BaseRoute {
      */
     constructor(router) {
         this.router = router;
+        this.startAllMethods(); //Use this method when you want load the class's methods finished on Init
     }
 
 
@@ -21,8 +22,8 @@ class BaseRoute {
 
         for (var key in functions) {
             if (functions.hasOwnProperty(key)) {
-                if ( functions[key] !== 'constructor' ) {
-                    if (  functions[key].indexOf('Init') !== -1 ) {
+                if (functions[key] !== 'constructor') {
+                    if (functions[key].indexOf('Init') !== -1) {
                         this[functions[key]]();
                         cont++;
                     }
@@ -61,24 +62,29 @@ class BaseRoute {
 
     objRoute(source) {
         return [
-            {verb: 'get', route: `/${source}`, action: 'index'},
-            {verb: 'get', route: `/${source}/:id`, action: 'show'},
-            {verb: 'post', route: `/${source}`, action: 'store'},
-            {verb: 'put', route: `/${source}/:id`, action: 'update'},
-            {verb: 'delete', route: `/${source}/:id`, action: 'destroy'}
+            { verb: 'get', route: `/${source}`, action: 'index' },
+            { verb: 'get', route: `/${source}/:id`, action: 'show' },
+            { verb: 'post', route: `/${source}`, action: 'store' },
+            { verb: 'put', route: `/${source}/:id`, action: 'update' },
+            { verb: 'delete', route: `/${source}/:id`, action: 'destroy' }
         ]
     }
 
-   resource(source, controller) {
+    resource(source, controller) {
         let arrayRoutes = this.objRoute(source);
+        let instanceOfController =  new controller();
+        let allMethods = Lodash.union(
+            Object.getOwnPropertyNames(Object.getPrototypeOf(instanceOfController)),  
+            Object.getOwnPropertyNames(Object.getPrototypeOf(controller.prototype))
+        );
+        
         arrayRoutes.forEach((objRoute) => {
-            console.log(Object.getPrototypeOf(controller) );
-            if (Object.getPrototypeOf(controller).hasOwnProperty(objRoute.action)) {
+            if (Object.getPrototypeOf(instanceOfController).hasOwnProperty(objRoute.action)) {
                 let route = this.router.route(objRoute.route);
-                    route[objRoute.verb](controller[objRoute.action]());
+                route[objRoute.verb](instanceOfController[objRoute.action]());
             }
         });
-   }
+    }
 
 
 }
