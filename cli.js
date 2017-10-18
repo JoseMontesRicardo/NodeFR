@@ -1,18 +1,19 @@
 #!/usr/bin/env node
 
 
-var chalk = require('chalk');
-var cli = require('cli');
-var figlet = require('figlet');
-var fs = require('fs');
-var path = require('path');
-var srcPath = process.cwd() + '/src';
-var Lodash = require('lodash');
-var exec = require('exec');
-var download = require('download-git-repo');
-var routersPath = srcPath + '/routes';
-var modelPath = srcPath + '/models';
-var coreTemplates = require('./.cli-templates/CoreTemplates');
+let chalk = require('chalk');
+let cli = require('cli');
+let figlet = require('figlet');
+let fs = require('fs');
+let path = require('path');
+let findRoot = require('find-root');
+let srcPath = findRoot(process.cwd()) + '/src';
+let Lodash = require('lodash');
+let exec = require('exec');
+let download = require('download-git-repo');
+let routersPath = srcPath + '/routes';
+let modelPath = srcPath + '/models';
+let coreTemplates = require('./.cli-templates/CoreTemplates');
 
 let options = cli.parse({
     generate: ['g', 'create new File with specification', 'string', false],
@@ -34,23 +35,8 @@ if (options.generate) {
 
 
 if (options.new) {
-
     cloneProject();
 }
-
-// console.log(
-//     chalk.red(
-//         figlet.textSync('NodeFR', { horizontalLayout: 'fitted' })
-//     )
-// );
-
-// var i = 0, interval = setInterval(function () { 
-//     cli.progress(++i / 100); 
-//     if (i === 100) {
-//         clearInterval(interval);
-//         cli.ok('Finished!');
-//     }
-// }, 50);
 
 
 /**
@@ -58,7 +44,7 @@ if (options.new) {
  */
 function generateRouter() {
     if (cli.args) {
-        for (var key in cli.args) {
+        for (let key in cli.args) {
             if (cli.args.hasOwnProperty(key)) {
 
                 let nameFile = Lodash.upperFirst(Lodash.camelCase(cli.args[key] + ' Route'));
@@ -91,7 +77,7 @@ function generateRouter() {
  */
 function generateModel() {
     if (cli.args) {
-        for (var key in cli.args) {
+        for (let key in cli.args) {
             if (cli.args.hasOwnProperty(key)) {
 
                 let nameFile = Lodash.upperFirst(Lodash.camelCase(cli.args[key] + ' Model'));
