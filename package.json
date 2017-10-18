@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "app-root-dir": "^1.0.2",
+    "body-parser": "^1.18.2",
     "chalk": "^2.1.0",
     "clear": "0.0.1",
     "cli": "^1.0.1",

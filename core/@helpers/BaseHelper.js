@@ -11,7 +11,7 @@ class BaseHelper {
 
   loadBaseFiles() {
     let modules = Util.readAllFiles(PathHelper.basePath);
-    global.bases = modules;
+    global.Bases = modules;
   }
 
 }

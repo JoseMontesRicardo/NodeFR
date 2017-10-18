@@ -3,9 +3,10 @@ import fs from 'fs';
 import appRootDir from 'app-root-dir';
 // import Connection from './src/repositories/Connection';
 import Express from 'express';
+import BodyParser from 'body-parser';
 import {RouterHelper, EnviromentHelper, ConnectionsHelper, BaseHelper} from './core/@helpers';
 import http from 'http';
-import cors from 'cors'; 
+import cors from 'cors';
 
 (async () => {
     try {
@@ -21,20 +22,23 @@ import cors from 'cors';
 
         // define port from config file
         let port = enviroment.port;
-        
+
         //start connections and sequelize
         let connection = new ConnectionsHelper();
         global.sequelize = await connection.getConnection();
-        
+
         //start Express
         let app = Express();
-        let router = Express.Router();
-        await routerHelper.startRoutes(app, router);
-         
+
+        app.use(BodyParser.json()); // for parsing application/json
+        app.use(BodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
         //Expressjs configurations
         // enable cors
         app.use(cors());
-        // await util.startRoutes(app, router);
+
+        let router = Express.Router();
+        await routerHelper.startRoutes(app, router);
+
 
         //create server http
         app.server = http.createServer(app);
