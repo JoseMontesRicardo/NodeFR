@@ -6,14 +6,9 @@ let cli = require('cli');
 let figlet = require('figlet');
 let fs = require('fs');
 let path = require('path');
-let findRoot = require('find-root');
-let srcPath = findRoot(process.cwd()) + '/src';
 let Lodash = require('lodash');
 let exec = require('exec');
 let download = require('download-git-repo');
-let routersPath = srcPath + '/routes';
-let modelPath = srcPath + '/models';
-let controllerPath = srcPath + '/controllers';
 let coreTemplates = require('./.cli-templates/CoreTemplates');
 
 let options = cli.parse({
@@ -33,9 +28,9 @@ if (options.generate) {
         let arrayResourcesFolders = createResourceFolders();
 
         // for (var index = 0; index < arrayResourcesFolders.length; index++) {
-            generateModel(true, arrayResourcesFolders);
-            generateController(true, arrayResourcesFolders);
-            generateResourceRouter(arrayResourcesFolders);
+        generateModel(true, arrayResourcesFolders);
+        generateController(true, arrayResourcesFolders);
+        generateResourceRouter(arrayResourcesFolders);
         // }
 
     } else {
@@ -52,6 +47,8 @@ if (options.new) {
 
 function createResourceFolders() {
     try {
+        let findRoot = require('find-root');
+        let srcPath = findRoot(process.cwd()) + '/src';
         let resourceFolder = [];
         let arg = '';
         let folderPath = '';
@@ -85,6 +82,9 @@ function createResourceFolders() {
  * to generate route
  */
 function generateRouter(resource = false) {
+    let findRoot = require('find-root');
+    let srcPath = findRoot(process.cwd()) + '/src';
+    let routersPath = srcPath + '/routes';
     if (cli.args) {
         for (let key in cli.args) {
             if (cli.args.hasOwnProperty(key)) {
@@ -118,6 +118,9 @@ function generateRouter(resource = false) {
  * to generate route
  */
 function generateResourceRouter(folder) {
+    let findRoot = require('find-root');
+    let srcPath = findRoot(process.cwd()) + '/src';
+    let routersPath = srcPath + '/routes';
     if (cli.args) {
         for (let key in cli.args) {
             if (cli.args.hasOwnProperty(key)) {
@@ -155,6 +158,9 @@ function generateResourceRouter(folder) {
  * to generate model
  */
 function generateModel(resource = false, folder = false) {
+    let findRoot = require('find-root');
+    let srcPath = findRoot(process.cwd()) + '/src';
+    let modelPath = srcPath + '/models';
     if (cli.args) {
         for (let key in cli.args) {
             if (cli.args.hasOwnProperty(key)) {
@@ -188,6 +194,9 @@ function generateModel(resource = false, folder = false) {
  * to generate controller
  */
 function generateController(resource = false, folder = false) {
+    let findRoot = require('find-root');
+    let srcPath = findRoot(process.cwd()) + '/src';
+    let controllerPath = srcPath + '/controllers';
     if (cli.args) {
         for (let key in cli.args) {
             if (cli.args.hasOwnProperty(key)) {
