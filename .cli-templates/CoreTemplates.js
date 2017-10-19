@@ -20,7 +20,7 @@ class ${fileName} extends Bases.BaseRoute {
     /**
     * main method, init all routes for ${fileName} here!
     */
-    init() {
+    routesInit() {
 
         this.get('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
         this.post('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
