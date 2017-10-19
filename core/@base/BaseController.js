@@ -1,7 +1,11 @@
 
-class  BaseController{
+class BaseController {
 
-  constructor(){  
+  constructor() {
+  }
+
+  get nameController() {
+    return this.constructor.name.toLowerCase();
   }
 
 }

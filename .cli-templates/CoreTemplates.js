@@ -6,7 +6,7 @@
  */
 const routeTemplate = function (fileName) {
     return `
-class ${fileName} extends bases.BaseRoute {
+class ${fileName} extends Bases.BaseRoute {
         
     /**
     * construct for ${fileName}
@@ -35,6 +35,34 @@ class ${fileName} extends bases.BaseRoute {
 export default ${fileName};`;
 }
 
+/**
+ * template of router
+ * 
+ * @param {String} fileName router fine name
+ */
+const resourceRouteTemplate = function (fileName, imports, controller) {
+    return `${imports};
+    
+class ${fileName} extends Bases.BaseRoute {
+        
+    /**
+    * construct for ${fileName}
+    * 
+    * @param {json} router instance of ExpressJS router 
+    */
+    constructor(app) {
+        super(app);
+    }
+
+    resourceInit(){
+      this.resource(this.nameRoute, ${controller});
+    }
+
+}
+
+export default ${fileName};`;
+}
+
 
 /**
  * template of model
@@ -45,7 +73,7 @@ const modelTemplate = function (fileName) {
     return `
 import Sequelize from 'sequelize';
 
-class ${fileName} extends bases.BaseModel {
+class ${fileName} extends Bases.BaseModel {
 
     /**
      * constructor for ${fileName}
@@ -78,8 +106,62 @@ export default ${fileName};
     `;
 }
 
+
+/**
+ * template of controlle
+ * 
+ * @param {String} fileName router fine name
+ */
+const controllerTemplate = function (fileName, imports) {
+    return `${imports};
+
+class ${fileName} extends Bases.BaseController {
+
+  constructor() {
+    super();
+  }
+
+  index() {
+    return (req, res) => {
+      res.send("Hi i'm a resource index from " + this.nameController + " " );
+    }
+  }
+
+  show() {
+    return (req, res) => {
+      res.send("Hi i'm a resource show from " + this.nameController + " >> " + + req.params.id + " ");
+    }
+  }
+
+  store() {
+    return (req, res) => {
+      res.send("Hi i'm a resource store from " + this.nameController + " >> " + + JSON.stringify(req.body) + " ");
+    }
+  }
+
+  update() {
+    return (req, res) => {
+      res.send("Hi i'm a resource update from " + this.nameController + " >> " + JSON.stringify(req.params.id) + JSON.stringify(req.body) + " ");
+    }
+  }
+
+
+  destroy() {
+    return (req, res) => {
+      res.send("Hi i'm a resource destroy from " + this.nameController + " >> " + + JSON.stringify(req.params.id) + " ");
+    }
+  }
+
+}
+
+export default ${fileName};`;
+}
+
+
 module.exports = {
     routeTemplate,
-    modelTemplate
+    modelTemplate,
+    controllerTemplate,
+    resourceRouteTemplate
 }
 

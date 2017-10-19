@@ -13,6 +13,7 @@ let exec = require('exec');
 let download = require('download-git-repo');
 let routersPath = srcPath + '/routes';
 let modelPath = srcPath + '/models';
+let controllerPath = srcPath + '/controllers';
 let coreTemplates = require('./.cli-templates/CoreTemplates');
 
 let options = cli.parse({
@@ -26,6 +27,17 @@ if (options.generate) {
         generateRouter();
     } else if (options.generate === 'model') {
         generateModel();
+    } else if (options.generate === 'controller') {
+        generateController();
+    } else if (options.generate === 'resource') {
+        let arrayResourcesFolders = createResourceFolders();
+
+        // for (var index = 0; index < arrayResourcesFolders.length; index++) {
+            generateModel(true, arrayResourcesFolders);
+            generateController(true, arrayResourcesFolders);
+            generateResourceRouter(arrayResourcesFolders);
+        // }
+
     } else {
         return console.log(
             chalk.red(new Error('Undefined layout!'))
@@ -38,20 +50,50 @@ if (options.new) {
     cloneProject();
 }
 
+function createResourceFolders() {
+    try {
+        let resourceFolder = [];
+        let arg = '';
+        let folderPath = '';
+
+        for (let key in cli.args) {
+            arg = cli.args[key];
+            folderPath = `${srcPath}/${Lodash.camelCase(arg + 'Resource')}`;
+            resourceFolder.push(folderPath);
+            if (!fs.existsSync(folderPath)) {
+                try {
+                    fs.mkdirSync(folderPath);
+                } catch (error) {
+                    return console.log(
+                        chalk.red(new Error(err))
+                    );
+                }
+            }
+        }
+
+        return resourceFolder;
+
+    } catch (error) {
+        return console.log(
+            chalk.red(new Error(error))
+        );
+    }
+}
+
 
 /**
  * to generate route
  */
-function generateRouter() {
+function generateRouter(resource = false) {
     if (cli.args) {
         for (let key in cli.args) {
             if (cli.args.hasOwnProperty(key)) {
 
-                let nameFile = Lodash.upperFirst(Lodash.camelCase(cli.args[key] + ' Route'));
-                let filePath = routersPath + '/' + nameFile + '.js';
+                let fileName = Lodash.upperFirst(Lodash.camelCase(cli.args[key] + 'Route'));
+                let filePath = routersPath + '/' + fileName + '.js';
 
                 if (!fs.existsSync(filePath)) {
-                    fs.writeFile(filePath, coreTemplates.routeTemplate(nameFile), function (err) {
+                    fs.writeFile(filePath, coreTemplates.routeTemplate(fileName), function (err) {
                         if (err) {
                             return console.log(
                                 chalk.red(new Error(err))
@@ -63,7 +105,44 @@ function generateRouter() {
                     });
                 } else {
                     return console.log(
-                        chalk.yellow(`[WARNING] ${nameFile} allredy exist!`)
+                        chalk.yellow(`[WARNING] ${fileName} allredy exist!`)
+                    );
+                }
+            }
+        }
+    }
+}
+
+
+/**
+ * to generate route
+ */
+function generateResourceRouter(folder) {
+    if (cli.args) {
+        for (let key in cli.args) {
+            if (cli.args.hasOwnProperty(key)) {
+
+                let suffix = 'Resource';
+                let fileName = Lodash.upperFirst(Lodash.camelCase(cli.args[key] + `${suffix}Route`));
+                let filePath = folder[key] + '/' + fileName + '.js';
+                let controllerSuffix = `${suffix}Controller`;
+                let importfileName = Lodash.upperFirst(Lodash.camelCase(cli.args[key] + controllerSuffix));
+                let imports = `import ${importfileName} from './${importfileName}.js'`;
+
+                if (!fs.existsSync(filePath)) {
+                    fs.writeFile(filePath, coreTemplates.resourceRouteTemplate(fileName, imports, importfileName), function (err) {
+                        if (err) {
+                            return console.log(
+                                chalk.red(new Error(err))
+                            );
+                        }
+                        return console.log(
+                            chalk.green('[OK] route generated!')
+                        );
+                    });
+                } else {
+                    return console.log(
+                        chalk.yellow(`[WARNING] ${fileName} allredy exist!`)
                     );
                 }
             }
@@ -75,16 +154,17 @@ function generateRouter() {
 /**
  * to generate model
  */
-function generateModel() {
+function generateModel(resource = false, folder = false) {
     if (cli.args) {
         for (let key in cli.args) {
             if (cli.args.hasOwnProperty(key)) {
-
-                let nameFile = Lodash.upperFirst(Lodash.camelCase(cli.args[key] + ' Model'));
-                let filePath = modelPath + '/' + nameFile + '.js';
+                let suffix = 'Resource';
+                let modelSuffix = (!resource) ? 'Model' : `${suffix}Model`;
+                let fileName = Lodash.upperFirst(Lodash.camelCase(cli.args[key] + modelSuffix));
+                let filePath = (folder) ? folder[key] + '/' + fileName + '.js' : modelPath + '/' + fileName + '.js';
 
                 if (!fs.existsSync(filePath)) {
-                    fs.writeFile(filePath, coreTemplates.modelTemplate(nameFile), function (err) {
+                    fs.writeFile(filePath, coreTemplates.modelTemplate(fileName), function (err) {
                         if (err) {
                             return console.log(
                                 chalk.red(new Error(err))
@@ -95,13 +175,60 @@ function generateModel() {
                         );
                     });
                 } else {
-                    return console.log(
-                        chalk.yellow(`[WARNING] ${nameFile} allredy exist!`)
+                    console.log(
+                        chalk.yellow(`[WARNING] ${fileName} allredy exist!`)
                     );
                 }
             }
         }
     }
+}
+
+/**
+ * to generate controller
+ */
+function generateController(resource = false, folder = false) {
+    if (cli.args) {
+        for (let key in cli.args) {
+            if (cli.args.hasOwnProperty(key)) {
+                let suffix = 'Resource';
+                let controllerSuffix = (!resource) ? 'Controller' : `${suffix}Controller`;
+                let modelSuffix = `${suffix}Model`;
+                let imports = '';
+                let fileName = Lodash.upperFirst(Lodash.camelCase(cli.args[key] + controllerSuffix));
+                let importfileName = Lodash.upperFirst(Lodash.camelCase(cli.args[key] + modelSuffix));
+                let filePath = (folder) ? folder[key] + '/' + fileName + '.js' : controllerPath + '/' + fileName + '.js';
+
+                if (resource) {
+                    imports = `import ${importfileName} from './${importfileName}.js'`;
+                }
+
+                if (!fs.existsSync(filePath)) {
+                    fs.writeFile(filePath, coreTemplates.controllerTemplate(fileName, imports), function (err) {
+                        if (err) {
+                            return console.log(
+                                chalk.red(new Error(err))
+                            );
+                        }
+                        return console.log(
+                            chalk.green('[OK] Controller generated!')
+                        );
+                    });
+                } else {
+                    console.log(
+                        chalk.yellow(`[WARNING] ${fileName} allredy exist!`)
+                    );
+                }
+            }
+        }
+    }
+}
+
+/**
+ * to generate resource
+ */
+function generateResource() {
+
 }
 
 function cloneProject() {

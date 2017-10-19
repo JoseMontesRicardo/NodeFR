@@ -41,3 +41,19 @@ $ nodefr --generate route [name]
 ```
 $ nodefr --generate model [name]
 ```
+### para generar resource.
+los resource habilitan los verbos http como GET, POST, PUT, DELETE para la ruta especificada.
+```
+$ nodefr --generate resource example1
+```
+lo anterior generará un directorio llamado example1Resource, que incluirá dentro de ella un archivo enrutador "Example1ResourceRouter.js", un modelo "Example1ResourceModel.js" y un controlador "Example1ResourceController.js"
+
+```
+$ npm run demon 
+//visit -> GET http://localhost:4000/example1resourceroute
+//visit -> GET http://localhost:4000/example1resourceroute/1234
+//visit -> POST http://localhost:4000/example1resourceroute
+//visit -> PUT http://localhost:4000/example1resourceroute/1234
+//visit -> DELETE http://localhost:4000/example1resourceroute/1234
+```
+y listo!, podras visitar cualquiera de las rutas anteriores con sus respectivos verbos HTTP

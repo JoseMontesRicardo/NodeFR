@@ -8,16 +8,6 @@ class PathHelper {
   constructor() {
   }
 
-  /**
-   * get root path of project
-   * 
-   * @return {String} root path of project
-   */
-  static get rootProject() {
-    global.rootPath = appRootDir.get();
-    return rootPath;
-  }
-
 
   /**
    * get core path of project
@@ -50,6 +40,17 @@ class PathHelper {
 
 
   /**
+   * get root path of project
+   * 
+   * @return {String} root path of project
+   */
+  static get rootProject() {
+    global.rootPath = appRootDir.get();
+    return rootPath;
+  }
+  
+
+  /**
    * get routers path of project
    * 
    * @return {String} routers path of project
@@ -57,6 +58,7 @@ class PathHelper {
   static get routesPath() {
     return `${PathHelper.rootPath}/routes`;
   }
+
 
 }
 
