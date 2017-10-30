@@ -1,6 +1,7 @@
 {
     "data-base": {
-        "default":"example",
+        "default":"crawler",
+        "db-connection":"mongorito",
         "example": {
             "data-base": "schema1",
             "user": "root",
@@ -8,6 +9,13 @@
             "host": "localhost",
             "dialect": "mysql",
             "timezone": "America/Bogota"
+        },
+        "crawler": {
+            "data-base": "crawler",
+            "user": "",
+            "pass": "",
+            "host": "localhost",
+            "port":27017
         }
     },
     "port":  4000

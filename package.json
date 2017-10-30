@@ -28,6 +28,7 @@
     "inquirer": "^3.3.0",
     "lodash": "^4.17.4",
     "minimist": "^1.2.0",
+    "mongorito": "^3.0.4",
     "mysql2": "^1.4.2",
     "path": "^0.12.7",
     "preferences": "^0.2.1",

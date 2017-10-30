@@ -25,8 +25,7 @@ import cors from 'cors';
 
         //start connections and sequelize
         let connection = new ConnectionsHelper();
-        global.sequelize = await connection.getConnection();
-
+        global.dBDefault = await connection.getConnection();
         //start Express
         let app = Express();
 
