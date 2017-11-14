@@ -1,48 +1,81 @@
 import Sequelize from 'sequelize';
-import  DatabaseMongorito from 'mongorito';
-
+import DatabaseMongorito from 'mongorito';
 import EnviromentHelper from './EnviromentHelper';
 import Lodash from 'lodash';
 
 class Connection {
-
+    
     /**
      * constructor
      */
     constructor() {
     }
-
-
+    
+    
     /**
-     * get connection
-     * 
-     * @return {Promise} Promise with object connection.
+     * take all params of connections from .enviroment.yaml and create connections.
+     *  
+     * @returns {Promise} Promise object represents the successfull connections and default connection
      */
-    getConnection() {
+    startConnections() {
         return new Promise(async (resolve, reject) => {
             try {
-                let { params, envFile } = await this.setUpParams();
-                let dbConnectionDefault = envFile['data-base']['db-connection'];
+                let connectionsStarted = [];
+                let { arrayOfConnections, connectionDefault } = await this.readConnections();
+                if (connectionDefault === null) {
+                    for (var key in arrayOfConnections[0]) {
+                        connectionDefault = key;
+                    }
+                }
+
+                for (let key in arrayOfConnections) {
+                    if (arrayOfConnections.hasOwnProperty(key)) {
+                        let params = arrayOfConnections[key];
+                        for (var connectionName in params) {
+                            connectionsStarted.push({ 
+                                name: connectionName, 
+                                package: params[connectionName].package,
+                                connection: await this.upConnection(params[connectionName]) 
+                            });
+                        }
+                    }
+                }
+                return resolve({connectionsStarted, connectionDefault});
+            } catch (error) {
+                console.error(error);
+                reject(error);
+            }
+        })
+    }
+
+    
+    /**
+     * create connection for each config in .enviroment.yaml 
+     * 
+     * @param {json} options params for each connection from .enviroment.yaml
+     * @returns {Promise} Promise object represents the connection for each config
+     */
+    upConnection(options) {
+        return new Promise(async (resolve, reject) => {
+            try {
                 let dbConnection = null;
-                switch (dbConnectionDefault) {
+                switch (options.package) {
                     case "sequelize":
-                        dbConnection = new Sequelize(params['data-base'], params['user'], params['pass'], {
-                            host: params['host'],
-                            dialect: params['dialect'],
-                            timezone: params['timezone']
+                        dbConnection = new Sequelize(options['data-base'], options['user'], options['pass'], {
+                            host: options['host'],
+                            dialect: options['dialect'],
+                            timezone: options['timezone']? options['timezone'] : 'Europe/London'
                         });
                         break;
                     case "mongorito":
-                        dbConnection = new DatabaseMongorito(`mongodb://${params['host']}:${params['port']}/${params['data-base']}?connectTimeoutMS=52000000`);
+                        dbConnection = new DatabaseMongorito(`mongodb://${options['host']}:${options['port']}/${options['data-base']}?connectTimeoutMS=52000000`);
                         await dbConnection.connect();
                         break;
 
                     default:
-                        console.log('Not BD selected!')
+                        console.log('Invalid Package!')
                         break;
                 }
-
-
                 return resolve(dbConnection);
             } catch (error) {
                 console.log(error);
@@ -53,34 +86,39 @@ class Connection {
 
 
     /**
-     * setup connection params from .enviroment.json
+     * Read and return all connection configs from .enviroment.yaml 
+     * and the default connection.
      * 
-     * @return {Promise} Promise with connection params
+     * @returns {Promise} Promise object represents the connections and default conection
      */
-    setUpParams() {
+    readConnections() {
         return new Promise(async (resolve, reject) => {
             try {
                 let envFile = await EnviromentHelper.readEnviroment();
-                let params = null;
-                let db = null;
+                let connectionDefault = null;
 
-                if (Lodash.has(envFile, 'data-base')) {
-                    if (Lodash.has(envFile['data-base'], 'default')) {
-                        db = envFile['data-base']['default'];
-                        params = envFile['data-base'][db];
+                if (Lodash.has(envFile, 'db')) {
+                    if (Lodash.has(envFile['db'], 'connections')) {
+
+                        if (Lodash.has(envFile['db'], 'default')) {
+                            connectionDefault = envFile['db']['default'];
+                        }
+
+                        let arrayOfConnections = envFile['db']['connections'];
+                        return resolve({ arrayOfConnections, connectionDefault });
                     } else {
-                        throw new Error('Connection key not found.')
+                        throw new Error('Connections not found!');
                     }
                 } else {
-                    throw new Error('Data-base config not found.')
+                    throw new Error('Property db not found!');
                 }
-                return resolve({ params, envFile });
             } catch (error) {
-                console.log(error);
+                console.error(error);
                 reject(error);
             }
         })
     }
+
 }
 
 export default Connection;

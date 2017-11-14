@@ -1,15 +1,16 @@
-import DataSourceModel from '../models/DataSource';
+import KellyModel from '../models/KellyModel';
 import Mongodb from 'mongodb';
 
-class DataSourceRespository {
+class KellyRepository {
 
     constructor() {
+        new KellyModel();
     }
 
     index(query = {}) {
         return new Promise(async (resolve, reject) => {
             try {
-                resolve(await DataSourceModel.find(query));
+                resolve(await KellyModel.find(query));
             } catch (error) {
                 console.log(error);
                 reject(error);
@@ -20,7 +21,7 @@ class DataSourceRespository {
     show(id) {
         return new Promise(async (resolve, reject) => {
             try {
-                resolve(await DataSourceModel.findOne({ _id: Mongodb.ObjectID(id) }));
+                resolve(await KellyModel.findOne({ _id: Mongodb.ObjectID(id) }));
             } catch (error) {
                 console.log(error);
                 reject(error);
@@ -31,7 +32,7 @@ class DataSourceRespository {
     store(data) {
         return new Promise(async (resolve, reject) => {
             try {
-                let newData = new DataSourceModel(data);
+                let newData = new KellyModel(data);
                 resolve(await newData.save());
             } catch (error) {
                 console.log(error);
@@ -43,7 +44,7 @@ class DataSourceRespository {
     update(id, data) {
         return new Promise(async (resolve, reject) => {
             try {
-                let element = await DataSourceModel.findOne({ _id: Mongodb.ObjectID(id) })
+                let element = await KellyModel.findOne({ _id: Mongodb.ObjectID(id) })
                 console.log(id);
                 element.set(data);
                 resolve(await element.save());
@@ -58,7 +59,7 @@ class DataSourceRespository {
     delete(id) {
         return new Promise(async (resolve, reject) => {
             try {
-                resolve(await DataSourceModel.remove({ _id: Mongodb.ObjectID(id) }));
+                resolve(await KellyModel.remove({ _id: Mongodb.ObjectID(id) }));
             } catch (error) {
                 console.log(error);
                 reject(error);
@@ -66,8 +67,7 @@ class DataSourceRespository {
         });
     }
 
-
-
 }
 
-export default DataSourceRespository;
+export default KellyRepository;
+

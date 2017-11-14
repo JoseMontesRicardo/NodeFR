@@ -14,7 +14,7 @@ let coreTemplates = require('./.cli-templates/CoreTemplates');
 let options = cli.parse({
     generate: ['g', 'create new File with specification', 'string', false],
     new: ['n', 'create new project']
-});
+}); 
 
 
 if (options.generate) {

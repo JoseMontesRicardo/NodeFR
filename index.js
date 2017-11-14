@@ -1,15 +1,17 @@
 import Sequelize from 'sequelize';
-import fs from 'fs';
+import Fs from 'fs';
 import appRootDir from 'app-root-dir';
-// import Connection from './src/repositories/Connection';
 import Express from 'express';
 import BodyParser from 'body-parser';
 import {RouterHelper, EnviromentHelper, ConnectionsHelper, BaseHelper} from './core/@helpers';
 import http from 'http';
 import cors from 'cors';
+import Yaml from 'js-yaml';
+
 
 (async () => {
     try {
+
         //init utils
         let routerHelper = new RouterHelper();
 
@@ -25,7 +27,10 @@ import cors from 'cors';
 
         //start connections and sequelize
         let connection = new ConnectionsHelper();
-        global.dBDefault = await connection.getConnection();
+        let connectionsConfig = await connection.startConnections();
+        global.allConnections = connectionsConfig.connectionsStarted;
+        global.connectionDefault = connectionsConfig.connectionDefault;
+        // global.dBDefault = await connection.getConnection();
         //start Express
         let app = Express();
 

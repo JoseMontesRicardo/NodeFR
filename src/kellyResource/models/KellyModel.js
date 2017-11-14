@@ -1,4 +1,4 @@
-class DataSource extends Bases.BaseModelMongorito {
+class KellyModel extends Bases.BaseModelMongorito {
 
     constructor(data = {}) {
         super(data);
@@ -9,4 +9,5 @@ class DataSource extends Bases.BaseModelMongorito {
     }
 }
 
-export default DataSource;
+export default KellyModel;
+

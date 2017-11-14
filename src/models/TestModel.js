@@ -11,13 +11,18 @@ class TestModel extends Bases.BaseModel {
     constructor( sync = true ) {
         super(sync);
     }
+    
+
+    get connection () {
+        return 'default';
+    }
 
 
     /**
-     * defineSchema
+     * Define your schema here!
      */
-    getSchema() {
-        return sequelize.define(this.schemaName, {
+    schema() {
+        return {
             //this is a field from TestModel table
             TestModelField: {
                 //type String
@@ -25,7 +30,7 @@ class TestModel extends Bases.BaseModel {
                 defaultValue: 'TestModelField!'
             }
             
-        });
+        };
     }
 
 }

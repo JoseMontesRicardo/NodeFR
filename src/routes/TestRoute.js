@@ -1,4 +1,5 @@
-import TestController from '../controllers/TestController'
+import TestController from '../controllers/TestController';
+import TestModel from '../models/TestModel';
 
 class TestRoute extends Bases.BaseRoute {
 
@@ -9,18 +10,20 @@ class TestRoute extends Bases.BaseRoute {
     */
     constructor(router) {
         super(router);
+        this.testModel = new TestModel();
     }
 
     
-    resourceInit(){
-      this.resource('myprefix', TestController);
-    }
+    // resourceInit(){
+    //   this.resource('myprefix', TestController);
+    // }
 
     /**
     * main method, init all routes for TestRoute here!
     */
     changolesInit() {
-        this.get('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
+        this.get('/'+this.nameRoute,async (req, res) => {res.send( await this.testModel.findAll({}) );});
+        // this.get('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
         this.post('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
         this.put('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});
         this.patch('/'+this.nameRoute,async (req, res) => {res.send({ 'route':  'Hi from ' + this.nameRoute + '' });});

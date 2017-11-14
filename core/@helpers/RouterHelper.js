@@ -31,7 +31,7 @@ class RouterHelper {
                 pathFile = classFiles[index];
                 fileNameWithoutExt = Path.basename(pathFile, ext);
 
-                if (fileName.indexOf('ResourceRoute') !== -1) {
+                if (fileName.indexOf('Route') !== -1) {
                     classFilesRequired[fileNameWithoutExt] = require(pathFile).default;
                     new classFilesRequired[fileNameWithoutExt](app);
                 }
@@ -52,15 +52,15 @@ class RouterHelper {
             try {
                 this.instanceAllResourcesRoute(PathHelper.rootPath, app);
 
-                let modules = Util.readAllFiles(PathHelper.routesPath);
-                let files = modules;
+                // let modules = Util.readAllFiles(PathHelper.routesPath);
+                // let files = modules;
 
-                for (var key in files) {
-                    if (files.hasOwnProperty(key)) {
-                        new files[key](app);
-                    }
-                }
-                app.use(router);
+                // for (var key in files) {
+                //     if (files.hasOwnProperty(key)) {
+                //         new files[key](app);
+                //     }
+                // }
+                // app.use(router);
                 return resolve(true);
             } catch (error) {
                 console.log(error);
